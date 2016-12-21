@@ -15,6 +15,8 @@
 
 //IF browser has JS disabled, Then index.html should display entire list of students
 
+/* Global Variables -------*/
+var $stuList = $('.student-item');  //to hide student list element
 
 var studentArray = []; //Global Array to hold students found on web page
 var groupsOfTenStudents = []; //Global Array to hold smaller arrays of groups of ten students
@@ -41,17 +43,26 @@ function calculatePagesNeeded() {
 
 function displayTenStudents() {
     calculatePagesNeeded();
-    //get the ul element & hide it
-    var $stuList = $('.student-list');
-    $stuList.hide();
-    //get first ten students & display them--will need a loop for unknow size
+    //group studentArray into arrays of ten students each
     for (var idx=0; idx < studentArray.length; idx += 10) {
-        // for (var sdx=10; sdx < studentArray.length; sdx += 10) {
-        //create studentArray.slice([idx of 10]) for studentArray.length
         groupsOfTenStudents.push(studentArray.slice(idx, (idx + 10)));
     }
-    // var firstTenStudents = studentArray.slice(0,10);
 }
+
+function showFirstTen() {
+    $stuList.show();
+}
+
+$(document).ready(function() {
+    //get the ul element & hide it
+    $stuList.hide();
+    displayTenStudents();
+
+});
+
+
+
+
 
 function displayPaginationLinks() {
     calculatePagesNeeded();
