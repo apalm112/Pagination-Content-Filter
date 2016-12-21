@@ -9,22 +9,32 @@
 //           <h3>iboya vat</h3>
 //           <span class="email">iboya.vat@example.com</span>
 //       </div>
-//       <div class="joined-details">
-//              <span class="date">Joined 07/15/15</span>
-//      </div>
 //   </li>
+
+
+
+//IF browser has JS disabled, Then index.html should display entire list of students
+
+
 
 var studentArray = []; //Global Array to hold students found on web page
 // When page loads:  the script will traverse throught the DOM
 //(by selecting '.student-details' then getting its child that's a <h3>)
-function countStudents() {
+function getStudents() {
     //Iterate thru DOM to collect all the students
     var getStudent = document.getElementsByClassName('student-details');
     for (var idx=0; idx < getStudent.length; idx++){
         //console.log(getStudent[idx].childNodes[3].innerHTML);
         studentArray.push(getStudent[idx].childNodes[3].innerHTML);
     }
-    // getStudent[33].childNodes[3].innerText;
+}
+
+function calculatePagesNeeded() {
+    // calculate the number of pages needed & pagination links to display
+    var numberOfStudents = studentArray.length;
+    var numberOfPaginationLinks = Math.ceil(numberOfStudents / 10);
+
+
 }
 
 
@@ -37,12 +47,6 @@ function countStudents() {
 
 
 
-
-//IF browser has JS disabled, Then index.html should display entire list of students
-
-
-// calculate the number of pages needed & pagination links to display
-//count the number of students on the page
 
 
 
