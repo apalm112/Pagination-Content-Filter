@@ -16,10 +16,15 @@
 //IF browser has JS disabled, Then index.html should display entire list of students
 
 /* Global Variables -------*/
-var $stuList = $('.student-item');  //to hide student list element
+var $studentLiElement = $('.student-item');  //to hide students li element
+var $studentUlElement = $('.student-list');  //to hide student ul element
+
+
+
 
 var studentArray = []; //Global Array to hold students found on web page
 var groupsOfTenStudents = []; //Global Array to hold smaller arrays of groups of ten students
+var devArray = []; //for the whole li object
 
 
 // When page loads:  the script will traverse throught the DOM
@@ -27,36 +32,39 @@ var groupsOfTenStudents = []; //Global Array to hold smaller arrays of groups of
 function getStudents() {
     //Iterate thru DOM to collect all the students
     var getStudent = document.getElementsByClassName('student-details');
-    for (var idx=0; idx < getStudent.length; idx++){
-        //console.log(getStudent[idx].childNodes[3].innerHTML);
-        studentArray.push(getStudent[idx].childNodes[3].innerHTML);
-    }
+    // for (var idx=0; idx < getStudent.length; idx++){
+    //     //console.log(getStudent[idx].childNodes[3].innerHTML);
+    //     studentArray.push(getStudent[idx].childNodes[3].innerHTML);
+    // }
+    for (var idx=0;idx<getStudent.length;idx++) {
+        devArray.push(getStudent[idx].childNodes);
+}
 }
 
 //Script must work for any number of students
 function calculatePagesNeeded() {
     // calculate the number of pages needed & pagination links to display
-    var numberOfStudents = studentArray.length;
+    var numberOfStudents = devArray.length;
     var numberOfPaginationLinks = Math.ceil(numberOfStudents / 10);
     return numberOfPaginationLinks;
 }
 
-function displayTenStudents() {
-    calculatePagesNeeded();
-    //group studentArray into arrays of ten students each
-    for (var idx=0; idx < studentArray.length; idx += 10) {
-        groupsOfTenStudents.push(studentArray.slice(idx, (idx + 10)));
+function getFirstTenStudents() {
+    //group devArray into arrays of ten students each
+    for (var idx=0; idx < devArray.length; idx += 10) {
+        groupsOfTenStudents.push(devArray.slice(idx, (idx + 10)));
     }
 }
 
 function showFirstTen() {
-    $stuList.show();
+    // groupsOfTenStudents[0][0];
+    $studentUlElement.append(groupsOfTenStudents[0][0]);
 }
 
 $(document).ready(function() {
     //get the ul element & hide it
-    $stuList.hide();
-    displayTenStudents();
+    $studentLiElement.hide();
+    getFirstTenStudents();
 
 });
 

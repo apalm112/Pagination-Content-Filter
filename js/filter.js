@@ -15,6 +15,7 @@
 
 //This could work for specific name search
 //populates the studentArray w/ names only
+groupsOfTenStudents[0][0][3].innerHTML;
 var getStudent = document.getElementsByClassName('student-details');
 for (var idx=0; idx < getStudent.length; idx++){
     //console.log(getStudent[idx].childNodes[3].innerHTML);
