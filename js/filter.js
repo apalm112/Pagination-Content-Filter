@@ -23,10 +23,10 @@ function searchButtonClicked() {
     //get text value from input
     $('.student-search button').on('click', function(){
         $('h4').remove();
+        //function call to search studentNames for matching name
         searchNames();
     });
 
-    //function call to search studentNames & studentEmails for matching name
 }
 
 function searchNames(){
@@ -64,9 +64,7 @@ function noMatchesMessage() {
     var $input = $('.student-search');
     $input[0].childNodes[0].placeholder = ('Search again for students');
     $input[0].childNodes[0].value = '';
-
 }
-
 
 
 $(document).ready(function(){
