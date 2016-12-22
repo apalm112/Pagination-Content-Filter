@@ -8,6 +8,10 @@ var $student = $('.student-item');
 
 /* Main Functions ----------------------------------*/
 
+function progressiveEnhancement() {
+    $student.slice(0, $student.length).css('display', 'none');
+}
+
 function appendSearchDiv() {
     //Include search input to look for particular student
     //Add it dynamically to index.html using the format:
@@ -69,6 +73,7 @@ function noMatchesMessage() {
 
 $(document).ready(function(){
     //functions to append content filter elements & functionality to the DOM
+    progressiveEnhancement();
     appendSearchDiv();
     searchButtonClicked();
 });

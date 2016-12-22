@@ -50,11 +50,10 @@ body{
 }
 
   .student-item{
-    display: none;
+    display: list-item;
     margin: 0 0 20px 0;
     padding: 0 0 20px 0;
-    /*border-bottom: 1px solid #eaeaea;*/
-    border: 2px solid red;
+    border-bottom: 1px solid #eaeaea;
   }
 
     .student-details{
