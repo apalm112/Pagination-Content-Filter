@@ -17,8 +17,12 @@ function appendSearchDiv() {
 }
 
 //Search button click returns all results that match name or emails which include matching name
-function searchButtonClick() {
+function searchButtonClicked() {
     //get text value from input
+    $('.student-search button').on('click', function(){
+        // console.log('search button clicked');
+        searchNames();
+    });
 
     //function call to search studentNames & studentEmails for matching name
 }
@@ -26,16 +30,18 @@ function searchButtonClick() {
 function searchNames(){
     var $input = $('.student-search');
     var inputValue = $input[0].firstChild.value;
+    var arr = [];
+    // console.log(inputValue);
 
     //Iterate thru DOM to collect all the students
     for (var idx=0; idx < $student.length; idx++){
-        //console.log($student[idx].childNodes[1].innerText);
-        if ($student[idx].childNodes[1].innerText contains inputValue) {
-            console.log(inputValue);
+        arr.push($student[idx].childNodes[1].innerText);
+        if ($student[idx].childNodes[1].innerText.includes(inputValue)) {
+            console.log('Found a match for ' + inputValue + ': ' + $student[idx].childNodes[1].innerText );
         }
     }
-
 }
+
 
 function searchEmails() {
     var studentEmails = [];
@@ -44,13 +50,14 @@ function searchEmails() {
 
 
 
-
 function noMatchesMessage() {
     //If no matches, then a message in the HTML tells user there are no matches
 }
 
-$(document).ready(function(){
-    //function to append div, input, button to DOM
-    appendSearchDiv();
 
+
+$(document).ready(function(){
+    //functions to append content filter elements & functionality to the DOM
+    appendSearchDiv();
+    searchButtonClicked();
 });
