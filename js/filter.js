@@ -12,7 +12,7 @@ function appendSearchDiv() {
     //Include search input to look for particular student
     //Add it dynamically to index.html using the format:
     var search =  '<div class="student-search">';
-    search += '<input placeholder="search for...">';
+    search += '<input placeholder="search for students...">';
     search += '<button>Search</button>';
     search += '</div>';
     $('.page-header').append(search);
@@ -44,6 +44,7 @@ function searchNames(){
             //shows only matching students
             $student.slice(idx, idx+1).css('display', 'list-item');
             console.log('Found a match for ' + inputValue + ': ' + $student[idx].childNodes[1].innerText );
+            $input[0].childNodes[0].value = '';
             notMatch = false;
         }
     }
@@ -53,19 +54,17 @@ function searchNames(){
 }
 
 
-function searchEmails() {
-    var studentEmails = [];
-
-}
-
-
-
 function noMatchesMessage() {
     //If no matches, then a message in the HTML tells user there are no matches
     var message = '<h4>No matches found.</h4>';
     $student.slice(0, $student.length).css('display', 'none');
     $student.slice(0, 10).css('display', 'list-item');
     $studentList.prepend(message);
+    // change input placeholder to 'search again....'
+    var $input = $('.student-search');
+    $input[0].childNodes[0].placeholder = ('Search again for students');
+    $input[0].childNodes[0].value = '';
+
 }
 
 
