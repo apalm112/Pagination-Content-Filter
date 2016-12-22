@@ -8,6 +8,8 @@
 //     <button>Search</button>
 // </div>
 
+var $student = $('.student-details');
+var studentArray = [];
 //Search button click returns all results that match name or emails which include matching name
 
 //If no matches, then a message in the HTML rells user there are no matches
@@ -15,9 +17,9 @@
 
 //This could work for specific name search
 //populates the studentArray w/ names only
-groupsOfTenStudents[0][0][3].innerHTML;
-var getStudent = document.getElementsByClassName('student-details');
-for (var idx=0; idx < getStudent.length; idx++){
-    //console.log(getStudent[idx].childNodes[3].innerHTML);
-    studentArray.push(getStudent[idx].childNodes[3].innerHTML);
+//$student[0][0][3].innerHTML;
+// var getStudent = document.getElementsByClassName('student-details');
+for (var idx=0; idx < $student.length; idx++){
+    //console.log($student[idx].childNodes[3].innerHTML);
+    studentArray.push($student[idx].childNodes[3].innerHTML);
 }
