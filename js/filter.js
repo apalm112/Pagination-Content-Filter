@@ -30,24 +30,21 @@ function searchButtonClicked() {
 function searchNames(){
     var $input = $('.student-search');
     var inputValue = $input[0].firstChild.value;
-    // var arr = [];
+
+    // hides all the students
+    $student.slice(0, $student.length).css('display', 'none');
 
     //Iterate thru DOM to collect all the students
     for (var idx=0; idx < $studentDetails.length; idx++){
         if ($studentDetails[idx].innerText.includes(inputValue)) {
-            console.log('Found a match for ' + inputValue + ': ' + $student[idx].childNodes[1].innerText );
-            // arr.push($student[idx].childNodes[1].innerText);
-
-            // hides all the students
-            $student.slice(0, $student.length).css('display', 'none');
             //shows only matching students
             $student.slice(idx, idx+1).css('display', 'list-item');
+            console.log('Found a match for ' + inputValue + ': ' + $student[idx].childNodes[1].innerText );
         } else {
             //call function to display msg 'Name not found.'
-            //console.log('Name not found.');
+            // console.log('Name not found.');
         }
     }
-    //if (value): $studentDetails[idx].childNodes[1].innerText.includes(inputValue)
 }
 
 
