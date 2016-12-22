@@ -1,5 +1,4 @@
-//Problem: There is no input search feature to quickly find a student
-//Solution: Add JS to dynamically add a search input field to find all matching students
+/* Content Filter code to dynamically add functionality for student search.*/
 
 /* Global Variables --------------------------------*/
 var $studentList = $('.student-list');
@@ -9,11 +8,12 @@ var $student = $('.student-item');
 /* Main Functions ----------------------------------*/
 
 function progressiveEnhancement() {
+    //
     $student.slice(0, $student.length).css('display', 'none');
 }
 
 function appendSearchDiv() {
-    //Include search input to look for particular student
+    //Include search input to look for particular student.
     //Add it dynamically to index.html using the format:
     var search =  '<div class="student-search">';
     search += '<input placeholder="search for students...">';
@@ -22,12 +22,13 @@ function appendSearchDiv() {
     $('.page-header').append(search);
 }
 
-//Search button click returns all results that match name or emails which include matching name
 function searchButtonClicked() {
-    //get text value from input
+    //Search button click returns all results that match name or emails which include matching name.
+    //Get user text value from input.
     $('.student-search button').on('click', function(){
+        //Removes the no match found message if it has been appended.
         $('h4').remove();
-        //function call to search studentNames for matching name
+        //Function call to search for a match.
         searchNames();
     });
 
@@ -71,9 +72,24 @@ function noMatchesMessage() {
 }
 
 
+function searchPaginationLinks() {
+    //Calculate the # of pagination links to display based on search results.
+    $('button').on('click', function() {
+        var highNumber = this.innerHTML * 10;
+        var lowNumber = highNumber - 10;
+        $student.slice(0, $student.length).css('display', 'none');
+        $student.slice(lowNumber, highNumber).css('display', 'list-item');
+    });
+}
+
+
+
+
+
 $(document).ready(function(){
     //functions to append content filter elements & functionality to the DOM
     progressiveEnhancement();
     appendSearchDiv();
     searchButtonClicked();
+    searchPaginationLinks();
 });
