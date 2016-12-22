@@ -2,6 +2,7 @@
 //Solution: Add JS to dynamically add a search input field to find all matching students
 
 /* Global Variables --------------------------------*/
+var $studentList = $('.student-list');
 var $studentDetails = $('.student-details');
 var $student = $('.student-item');
 
@@ -21,6 +22,7 @@ function appendSearchDiv() {
 function searchButtonClicked() {
     //get text value from input
     $('.student-search button').on('click', function(){
+        $('h4').remove();
         searchNames();
     });
 
@@ -28,22 +30,25 @@ function searchButtonClicked() {
 }
 
 function searchNames(){
+    //Function searches for matching name or email, displays results to the DOM
     var $input = $('.student-search');
     var inputValue = $input[0].firstChild.value;
+    var notMatch = true;
 
-    // hides all the students
+    // hides students currently displayed
     $student.slice(0, $student.length).css('display', 'none');
 
     //Iterate thru DOM to collect all the students
-    for (var idx=0; idx < $studentDetails.length; idx++){
-        if ($studentDetails[idx].innerText.includes(inputValue)) {
+    for (var idx=0; idx < $student.length; idx++){
+        if ($student[idx].innerText.includes(inputValue)) {
             //shows only matching students
             $student.slice(idx, idx+1).css('display', 'list-item');
             console.log('Found a match for ' + inputValue + ': ' + $student[idx].childNodes[1].innerText );
-        } else {
-            //call function to display msg 'Name not found.'
-            // console.log('Name not found.');
+            notMatch = false;
         }
+    }
+    if (notMatch) {
+        noMatchesMessage();
     }
 }
 
@@ -57,6 +62,10 @@ function searchEmails() {
 
 function noMatchesMessage() {
     //If no matches, then a message in the HTML tells user there are no matches
+    var message = '<h4>No matches found.</h4>';
+    $student.slice(0, $student.length).css('display', 'none');
+    $student.slice(0, 10).css('display', 'list-item');
+    $studentList.prepend(message);
 }
 
 

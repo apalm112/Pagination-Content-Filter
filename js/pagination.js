@@ -37,6 +37,7 @@ function createPageLinks() {
 function paginationClicked() {
     //when pagination links clicked on, corresponding set of students is shown
     $('.active').on('click', function() {
+        $('h4').remove();
         var highNumber = this.innerHTML * 10;
         var lowNumber = highNumber - 10;
         $student.slice(0, $student.length).css('display', 'none');
