@@ -43,8 +43,10 @@ body{
       color: #fff
     }
 
-.student-list{
-
+.student-list h4 {
+        text-align: center;
+        padding: 0 80px 35px 0;
+        font-weight: bold;
 }
 
   .student-item{
