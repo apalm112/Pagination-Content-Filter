@@ -52,8 +52,8 @@ function paginationClicked() {
         var highNumber = number * 10;
         var lowNumber = highNumber - 10;
         // if else conditional to get previous set of students diplay:none;
+        $student.slice(0, $student.length).css('display', 'none');
         $student.slice(lowNumber, highNumber).css('display', 'list-item');
-
     });
 }
 
