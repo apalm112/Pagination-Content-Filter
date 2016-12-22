@@ -2,7 +2,8 @@
 //Solution: Add JS to dynamically add a search input field to find all matching students
 
 /* Global Variables --------------------------------*/
-var $student = $('.student-details');
+var $studentDetails = $('.student-details');
+var $student = $('.student-item');
 
 /* Main Functions ----------------------------------*/
 
@@ -20,7 +21,6 @@ function appendSearchDiv() {
 function searchButtonClicked() {
     //get text value from input
     $('.student-search button').on('click', function(){
-        // console.log('search button clicked');
         searchNames();
     });
 
@@ -30,16 +30,24 @@ function searchButtonClicked() {
 function searchNames(){
     var $input = $('.student-search');
     var inputValue = $input[0].firstChild.value;
-    var arr = [];
-    // console.log(inputValue);
+    // var arr = [];
 
     //Iterate thru DOM to collect all the students
-    for (var idx=0; idx < $student.length; idx++){
-        arr.push($student[idx].childNodes[1].innerText);
-        if ($student[idx].childNodes[1].innerText.includes(inputValue)) {
+    for (var idx=0; idx < $studentDetails.length; idx++){
+        if ($studentDetails[idx].innerText.includes(inputValue)) {
             console.log('Found a match for ' + inputValue + ': ' + $student[idx].childNodes[1].innerText );
+            // arr.push($student[idx].childNodes[1].innerText);
+
+            // hides all the students
+            $student.slice(0, $student.length).css('display', 'none');
+            //shows only matching students
+            $student.slice(idx, idx+1).css('display', 'list-item');
+        } else {
+            //call function to display msg 'Name not found.'
+            //console.log('Name not found.');
         }
     }
+    //if (value): $studentDetails[idx].childNodes[1].innerText.includes(inputValue)
 }
 
 
