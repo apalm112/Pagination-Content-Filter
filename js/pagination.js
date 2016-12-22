@@ -1,7 +1,6 @@
 //Problem: Page currently has no pagination, so all students are listed on page
 //Solution: Implement a pagination feature w/ unobtrusive JS to show only 10 students at a time, w/ clickable links appended that will list further students
 
-
 // <ul class="student-list">
 //   <li class="student-item cf">
 //       <div class="student-details">
@@ -11,16 +10,11 @@
 //       </div>
 //   </li>
 
-
-
 //IF browser has JS disabled, Then index.html should display entire list of students
 
 /* Global Variables -------*/
-var $studentLiElement = $('.student-item');  //to hide students li element
-var $studentUlElement = $('.student-list');  //to hide student ul element
-
-
-
+var $studentList = $('.student-list');  //to hide student ul element
+var $student = $('.student-item');
 
 var studentArray = []; //Global Array to hold students found on web page
 var groupsOfTenStudents = []; //Global Array to hold smaller arrays of groups of ten students
@@ -31,14 +25,14 @@ var devArray = []; //for the whole li object
 //(by selecting '.student-details' then getting its child that's a <h3>)
 function getStudents() {
     //Iterate thru DOM to collect all the students
-    var getStudent = document.getElementsByClassName('student-details');
+    var getStudent = document.getElementsByClassName('student-item');
     // for (var idx=0; idx < getStudent.length; idx++){
     //     //console.log(getStudent[idx].childNodes[3].innerHTML);
     //     studentArray.push(getStudent[idx].childNodes[3].innerHTML);
     // }
     for (var idx=0;idx<getStudent.length;idx++) {
         devArray.push(getStudent[idx].childNodes);
-}
+    }
 }
 
 //Script must work for any number of students
@@ -53,23 +47,26 @@ function getFirstTenStudents() {
     //group devArray into arrays of ten students each
     for (var idx=0; idx < devArray.length; idx += 10) {
         groupsOfTenStudents.push(devArray.slice(idx, (idx + 10)));
+        $student.remove([idx]);
     }
+    $student.load(function() {
+        $(this).css('display', 'list-item');
+    });
 }
 
-function showFirstTen() {
-    // groupsOfTenStudents[0][0];
-    $studentUlElement.append(groupsOfTenStudents[0][0]);
+function showFirstTenStudents() {
+    $student.slice(0, 10).css('display', 'list-item');
+    //this line almost worked, just need to add li border
+    //$stuList.prepend(groupsOfTenStudents[0].slice(0, 10));
 }
+
 
 $(document).ready(function() {
     //get the ul element & hide it
-    $studentLiElement.hide();
-    getFirstTenStudents();
+    // $student.hide(); moved to CSS display: none;
+    showFirstTenStudents();
 
 });
-
-
-
 
 
 function displayPaginationLinks() {
@@ -91,5 +88,3 @@ function paginationClicked() {
     //when pagination links clicked on, they show appropriate list of students
 
 }
-
-getStudents();
