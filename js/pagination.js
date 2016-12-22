@@ -21,7 +21,6 @@ function showFirstTenStudents() {
 }
 
 function displayPaginationLinks() {
-    calculatePagesNeeded();
     //All functionality to be appended dynamically to the DOM
 
     $studentList.append(createPageLinks);
@@ -36,11 +35,14 @@ function calculatePagesNeeded() {
 
 function createPageLinks() {
     var numberOfPageLinks = calculatePagesNeeded();
-    var paginationLink = '<div class="pagination">';
-    paginationLink += '<ul><li>';
-    paginationLink += '<a class="active" href="#">' + 1 + '</a>';
-    paginationLink += '</li>';
-    //repeat
+    var paginationLink = '<div class="pagination"><ul>';
+    var counter = 0;
+    for (var idx=0;idx<numberOfPageLinks;idx++) {
+        counter ++;
+        paginationLink += '<li>';
+        paginationLink += '<a class="active" href="#potato">' + counter + '</a>';
+        paginationLink += '</li>';
+    }
     paginationLink += '</ul></div>';
     return paginationLink;
 }
