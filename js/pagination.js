@@ -15,15 +15,14 @@ function studentDisplayNone() {
 }
 
 function showFirstTenStudents() {
-    //On page load, display the first ten students, hide the others & pagination links.
+    //Hide all students, then display the first ten students.
     studentDisplayNone();
     $student.slice(0, 10).css('display', 'list-item');
-    appendPaginationLinks();
 }
 
 function appendPaginationLinks() {
     //Append the pagination links to the DOM.
-    $('.page').append(createPageLinks);
+    $('.page').append(createPageLinksDiv);
 }
 
 function calculatePagesNeeded() {
@@ -32,14 +31,7 @@ function calculatePagesNeeded() {
     return numberOfPaginationLinks;
 }
 
-function searchPagesNeeded() {
-    //Calculate the # of pages & links needed, based on 10 students/page.
-    var numberOfSearchLinks = Math.ceil(counter / 10);
-    return numberOfSearchLinks;
-}
-
-
-function createPageLinks() {
+function createPageLinksDiv() {
     //Dynamically creates the pagination links w/ corresponding number values displayed.
     var paginationLink = '<div class="pagination"><ul>';
     for (var idx=0; idx < calculatePagesNeeded(); idx++) {
@@ -54,8 +46,8 @@ function paginationClicked() {
     //When pagination link is clicked, corresponding set of students is displayed.
     $('.active').on('click', function() {
         //Remove any previous displayed no match found message.
-        // $('h4').remove();
-        //Calculate range of students to display.
+        $('h4').remove();
+        //Calculate new range of students to display.
         var highNumber = this.innerHTML * 10;
         var lowNumber = highNumber - 10;
         //Hide currently displayed students.
@@ -65,16 +57,13 @@ function paginationClicked() {
     });
 }
 
-
-
-
-/* Content Filter Functions -- ----------------------------------*/
+/* Content Filter Functions -----------------------------------------*/
 
 function appendSearchDiv() {
     //Dynamically create & append content filter input & button, using the format:
     var search =  '<div class="student-search">';
     search += '<input placeholder="search for students...">';
-    search += '<button>Search</button>';
+    search += '<button id="query">Search</button>';
     search += '</div>';
     $('.page-header').append(search);
 }
@@ -82,15 +71,16 @@ function appendSearchDiv() {
 function searchButtonClicked() {
     //Returns all results that match name or emails which include matching name.
     //Get user text value from input.
-    $('.student-search button').on('click', function(){
-        hidePaginationLinks();
+    $('.student-search button').on('click', function() {
+        // inputEmpty();
+        //Remove the pagination links, to be replaced w/ search links.
+        //hidePaginationLinks();
         //Removes the no match found message if it has been appended.
         $('h4').remove();
-        // hidePaginationLinks();
         //Function call to search for a match.
         searchNames();
-        //get corresponding # of pagination Links
-        createPageLinks();
+        //Get corresponding # of pagination links.
+        createPageLinksDiv();
     });
 
 }
@@ -98,7 +88,7 @@ function searchButtonClicked() {
 function searchNames(){
     //Function searches for matching name or email, displays results to the DOM.
     var $input = $('.student-search');
-    var inputValue = $input[0].firstChild.value;
+    var inputValue = $input[0].firstChild.value.toLowerCase();
     var notMatch = true;
 
     //Hides any students currently displayed.
@@ -134,32 +124,32 @@ function noMatchesMessage() {
     $input[0].childNodes[0].value = '';
 }
 
-// DUPLICATES ???
-/*function createPageLinks() {
-    //Calculate the # of pagination links to display based on search results.
-    //Dynamically creates the pagination links w/ corresponding number values displayed.
-    var paginationLink = '<div class="pagination"><ul>';
-    for (var idx=0; idx < calculatePagesNeeded(); idx++) {
-        paginationLink += '<li><a class="active" href="#' + (idx+1) + '">';
-        paginationLink += (idx+1) + '</a></li>';
-    }
-    paginationLink += '</ul></div>';
-    return paginationLink;
+/*function searchPagesNeeded() {
+//Calculate the # of pages & links needed, based on 10 students/page.
+var numberOfSearchLinks = Math.ceil(counter / 10);
+return numberOfSearchLinks;
 }*/
 
-function hidePaginationLinks() {
-    //When no matching students found, hide the pagination links.
-    $searchPaginationLink = $('.pagination');
-    $searchPaginationLink.remove();
-    //Tried this one:     css('display', 'none');
+/*function inputEmpty() {
+//Check input value, if empty, then show first ten students.
+var $input = $('.student-search');
+var inputValue = $input[0].firstChild.value;
+if (inputValue === '') {
+showFirstTenStudents();
 }
+}*/
 
-
+// function hidePaginationLinks() {
+//     //When no matching students found, hide the pagination links.
+//     $searchPaginationLink = $('.pagination');
+//     $searchPaginationLink.css('display', 'none');
+// }
 
 /* On page load ---------------------------------*/
 //On initial page load, these functions are executed.
 $(document).ready(function() {
     showFirstTenStudents();
+    appendPaginationLinks();
     appendSearchDiv();
     paginationClicked();
     searchButtonClicked();
