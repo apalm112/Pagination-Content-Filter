@@ -6,6 +6,7 @@ var $studentList = $('.student-list');  //to hide student ul element
 var $studentDetails = $('.student-details');
 var $student = $('.student-item');
 var counter;  // To track # of search result pagination links to make.
+var results = [];
 
 /* Main Functions ----------------------------------------*/
 
@@ -50,8 +51,7 @@ function paginationClicked() {
         //Calculate new range of students to display.
         var highNumber = this.innerHTML * 10;
         var lowNumber = highNumber - 10;
-        //Hide currently displayed students.
-        $student.slice(0, $student.length).css('display', 'none');
+        studentDisplayNone();
         //Show new set of students.
         $student.slice(lowNumber, highNumber).css('display', 'list-item');
     });
@@ -69,15 +69,18 @@ function appendSearchDiv() {
 }
 
 function searchButtonClicked() {
-    /*TODO: Problem: When the search button is clicked & the input value is
-            '', the functionality as is just removes any divs shown & displays the first ten students But w/out the pagination links.  Solution:  fix the code that the pagination links are appended to the DOM.*/
+    /*TODO: Problem: When the search button is clicked & the input
+            value is '', the functionality as is just removes any divs shown & displays the first ten students But w/out the pagination links.  Solution:  fix the code that the pagination links are appended to the DOM.*/
     //Returns all results that match name or emails which include matching name.
     //Get user text value from input.
     $('.student-search button').on('click', function() {
         //Removes the no match found message if it has been appended.
         $('h4').remove();
+        //Prep the results array for new search results by emptying in out.
+        results = [];
         //Function call to search for a match.
         searchNames();
+        searchPaginationLinkClicked();
     });
 }
 
@@ -99,12 +102,13 @@ function searchNames(){
     hideSearchLinks(); // THIS ONE WORKS!
 
     /* TODO: Problem: This for loop finds all the matches, then just displays
-             all ofthem at once.  Solution: Push all matches into an array, then show only the first ten matches.  Then subsequent sets of matches can be displayed by clicking the search pagination links. */
+             all of them at once.  Solution: Push all matches into an array, then show only the first ten matches.  Then subsequent sets of matches can be displayed by clicking the search pagination links. */
     //Iterate thru DOM to collect any matching students.
     for (var idx=0; idx < $student.length; idx++){
         if (($student[idx].innerText.includes(inputValue)) && (inputValue !== '')) {
+            results.push($student[idx]);
             //Shows only matching students.
-            $student.slice(idx, idx+1).css('display', 'list-item');
+            // $student.slice(idx, idx+1).css('display', 'list-item');
             counter++;
             //Clears the user input text from the input form.
             $input[0].childNodes[0].value = '';
@@ -112,7 +116,7 @@ function searchNames(){
         }
     }
     if (inputValue === '') {
-        console.log('INPUT VALUE IS EMPTY STRING');
+        console.log('RETURN TO FIRST PAGE');
         showFirstTenStudents();
     //Display no matches found message to the DOM.
     } else if (notMatch) {
@@ -121,6 +125,12 @@ function searchNames(){
     } else {
         // This conditional runs when matches are found. It will call a  function to create search pagination links & append them.
         appendSearchLinksDiv();
+        //TODO: append Search Match Results(); or showFirstTenMatchedStudents();
+        //Show first ten students.
+        var firstTen = results.slice(0, 10);
+        for (var sdx=0; sdx < firstTen.length; sdx++){
+            firstTen[sdx].style.display = ('list-item');
+        }
     }
 }
 
@@ -162,24 +172,24 @@ function appendSearchLinksDiv() {
 
 function searchPaginationLinkClicked() {
     //TODO: This function is not wired to return the search results,
-            // It is currently just grabbing a set of 10 students from the DOM list.  Needs to grab the students from a new list of search results.
-
-
+            // It is currently just grabbing a set of 10 students from the DOM list.  Needs to grab the students from a new list of search results, use results array.
     //When search link is clicked, corresponding set of students is displayed.
     $('.search-active').on('click', function() {
-        //Remove any previous displayed message or search links.
         console.log('SEARCH PAGINATION LINK CLICKED');
-        hideSearchLinks();
+        console.log('this: ' + this);
+        console.log('innerHTML: ' + this.innerHTML);
+        //Remove any previous displayed message or search links.
         $('h4').remove();
+        // hideSearchLinks();  This line not working?
         //Calculate new range of students to display.
         var highNumber = this.innerHTML * 10;
-        console.log(this);
-        console.log(this.innerHTML);
         var lowNumber = highNumber - 10;
-        //Hide currently displayed students.
-        $student.slice(0, $student.length).css('display', 'none');
+        studentDisplayNone();
         //Show new set of students.
-        $student.slice(lowNumber, highNumber).css('display', 'list-item');
+        var firstTen = results.slice(lowNumber, highNumber);
+        for (var idx=0; idx < firstTen.length; idx++){
+            firstTen[idx].style.display = ('list-item');
+        }
     });
 }
 
@@ -196,8 +206,7 @@ function hideSearchLinks() {
 $(document).ready(function() {
     showFirstTenStudents();
     appendPaginationLinks();
-    appendSearchDiv();
     paginationClicked();
+    appendSearchDiv();
     searchButtonClicked();
-    searchPaginationLinkClicked();
 });
