@@ -100,9 +100,6 @@ function searchNames(){
     //Hides any students currently displayed.
     studentDisplayNone();
     hideSearchLinks(); // THIS ONE WORKS!
-
-    /* TODO: Problem: This for loop finds all the matches, then just displays
-             all of them at once.  Solution: Push all matches into an array, then show only the first ten matches.  Then subsequent sets of matches can be displayed by clicking the search pagination links. */
     //Iterate thru DOM to collect any matching students.
     for (var idx=0; idx < $student.length; idx++){
         if (($student[idx].innerText.includes(inputValue)) && (inputValue !== '')) {
@@ -118,6 +115,9 @@ function searchNames(){
     if (inputValue === '') {
         console.log('RETURN TO FIRST PAGE');
         showFirstTenStudents();
+        //Function call to display default pagination links!
+        appendPaginationLinks();
+        paginationClicked();
     //Display no matches found message to the DOM.
     } else if (notMatch) {
         noMatchesMessage();
@@ -171,16 +171,10 @@ function appendSearchLinksDiv() {
 }
 
 function searchPaginationLinkClicked() {
-    //TODO: This function is not wired to return the search results,
-            // It is currently just grabbing a set of 10 students from the DOM list.  Needs to grab the students from a new list of search results, use results array.
     //When search link is clicked, corresponding set of students is displayed.
     $('.search-active').on('click', function() {
-        console.log('SEARCH PAGINATION LINK CLICKED');
-        console.log('this: ' + this);
-        console.log('innerHTML: ' + this.innerHTML);
         //Remove any previous displayed message or search links.
         $('h4').remove();
-        // hideSearchLinks();  This line not working?
         //Calculate new range of students to display.
         var highNumber = this.innerHTML * 10;
         var lowNumber = highNumber - 10;
@@ -193,12 +187,10 @@ function searchPaginationLinkClicked() {
     });
 }
 
-
 function hideSearchLinks() {
     //When no matching students found, hide the pagination links.
     $searchLink = $('.search-pagination');
     $searchLink.remove();
-    // css('display', 'none')
 }
 
 /* On page load ---------------------------------*/
