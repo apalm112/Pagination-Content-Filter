@@ -7,6 +7,10 @@ var $studentDetails = $('.student-details');
 var $student = $('.student-item');
 var counter;  // To track # of search result pagination links to make.
 var results = [];
+var $input;
+var inputValue;
+console.log('INPUT VALUE IS: ' + inputValue);
+var notMatch = true;
 
 /* Main Functions ----------------------------------------*/
 
@@ -69,8 +73,6 @@ function appendSearchDiv() {
 }
 
 function searchButtonClicked() {
-    /*TODO: Problem: When the search button is clicked & the input
-            value is '', the functionality as is just removes any divs shown & displays the first ten students But w/out the pagination links.  Solution:  fix the code that the pagination links are appended to the DOM.*/
     //Returns all results that match name or emails which include matching name.
     //Get user text value from input.
     $('.student-search button').on('click', function() {
@@ -85,33 +87,16 @@ function searchButtonClicked() {
 }
 
 function searchNames(){
-    /* TODO:  Problem: This function is just too damn big.  Solution:  Break it
-              into two seperate functions:
-              one function with the for loop,
-              the second function with the if else if conditional. */
-
-
     //Function searches for matching name or email, displays results to the DOM.
-    var $input = $('.student-search');
-    var inputValue = $input[0].firstChild.value.toLowerCase();
+    $input = $('.student-search');
+    inputValue = $input[0].firstChild.value.toLowerCase();
     console.log('INPUT VALUE IS: ' + inputValue);
-    var notMatch = true;
+    notMatch = true;
     counter = 0;
     //Hides any students currently displayed.
     studentDisplayNone();
     hideSearchLinks(); // THIS ONE WORKS!
-    //Iterate thru DOM to collect any matching students.
-    for (var idx=0; idx < $student.length; idx++){
-        if (($student[idx].innerText.includes(inputValue)) && (inputValue !== '')) {
-            results.push($student[idx]);
-            //Shows only matching students.
-            // $student.slice(idx, idx+1).css('display', 'list-item');
-            counter++;
-            //Clears the user input text from the input form.
-            $input[0].childNodes[0].value = '';
-            notMatch = false;
-        }
-    }
+    getMatches();
     if (inputValue === '') {
         console.log('RETURN TO FIRST PAGE');
         showFirstTenStudents();
@@ -125,12 +110,30 @@ function searchNames(){
     } else {
         // This conditional runs when matches are found. It will call a  function to create search pagination links & append them.
         appendSearchLinksDiv();
-        //TODO: append Search Match Results(); or showFirstTenMatchedStudents();
-        //Show first ten students.
-        var firstTen = results.slice(0, 10);
-        for (var sdx=0; sdx < firstTen.length; sdx++){
-            firstTen[sdx].style.display = ('list-item');
+        appendFirstTenSearchResults();
+    }
+}
+
+function getMatches() {
+    //Iterate thru DOM to collect any matching students.
+    for (var idx=0; idx < $student.length; idx++){
+        if (($student[idx].innerText.includes(inputValue)) && (inputValue !== '')) {
+            results.push($student[idx]);
+            //Shows only matching students.
+            // $student.slice(idx, idx+1).css('display', 'list-item');
+            counter++;
+            //Clears the user input text from the input form.
+            $input[0].childNodes[0].value = '';
+            notMatch = false;
         }
+    }
+}
+
+function appendFirstTenSearchResults() {
+    //Display the first ten search results.
+    var firstTen = results.slice(0, 10);
+    for (var sdx=0; sdx < firstTen.length; sdx++){
+        firstTen[sdx].style.display = ('list-item');
     }
 }
 
