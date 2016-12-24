@@ -88,7 +88,6 @@ function searchNames(){
     //Set values for variables that are passed to other functions.
     $input = $('.student-search');
     inputValue = $input[0].firstChild.value.toLowerCase();
-    console.log('INPUT VALUE IS: ' + inputValue);
     notMatch = true;
     counter = 0;
     studentDisplayNone();
@@ -96,7 +95,6 @@ function searchNames(){
     getMatches();
     if (inputValue === '') {
         //Conditional resets DOM to inital page load state.
-        console.log('RETURN TO FIRST PAGE');
         showFirstTenStudents();
         appendPaginationLinks();
         paginationClicked();
