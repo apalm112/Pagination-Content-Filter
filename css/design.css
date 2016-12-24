@@ -32,6 +32,7 @@ body{
       border: 1px solid #eaeaea;
       padding: 8px 15px;
       font-size: 14px;
+      box-shadow: inset 5px 5px 5px;
     }
 
     .page-header .student-search button{
@@ -122,3 +123,32 @@ body{
       background-color: #4ba6c3;
       color: #fff;
     }
+
+button {
+    box-shadow: 10px 10px 20px black;
+}
+
+/* Search Pagination Link Styles--------------------------*/
+
+.search-pagination{
+  margin: 40px 0 0 0;
+  text-align: center;
+}
+
+.search-pagination li{
+  display: inline;
+}
+
+.search-pagination li a{
+  border: 1px solid #eaeaea;
+  border-radius: 5px;
+  padding: 3px 8px;
+  text-decoration: none;
+  color: #4ba6c3;
+}
+
+.search-pagination li a.active,
+.search-pagination li a:hover{
+  background-color: #4ba6c3;
+  color: #fff;
+}
