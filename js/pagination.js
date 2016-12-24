@@ -91,7 +91,7 @@ function searchNames(){
     notMatch = true;
     counter = 0;
     studentDisplayNone();
-    hideSearchLinks();
+    removeSearchLinks();
     getMatches();
     if (inputValue === '') {
         //Conditional resets DOM to inital page load state.
@@ -101,7 +101,7 @@ function searchNames(){
     //Conditional displays no matches found message to the DOM.
     } else if (notMatch) {
         noMatchesMessage();
-        hideSearchLinks();
+        removeSearchLinks();
     } else {
         // This conditional runs when matches are found.
         appendSearchLinksDiv();
@@ -186,8 +186,8 @@ function searchPaginationLinkClicked() {
     });
 }
 
-function hideSearchLinks() {
-    //When no matching students found, hide the pagination links.
+function removeSearchLinks() {
+    //When no matching students found, remove the pagination links.
     $searchLink = $('.search-pagination');
     $searchLink.remove();
 }
