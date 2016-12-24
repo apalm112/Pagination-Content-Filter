@@ -103,14 +103,14 @@ function searchNames(){
         noMatchesMessage();
         hideSearchLinks();
     } else {
-        // This conditional runs when matches are found. It will call a  function to create search pagination links & append them.
+        // This conditional runs when matches are found.
         appendSearchLinksDiv();
         appendFirstTenSearchResults();
     }
 }
 
 function getMatches() {
-    //Iterate thru DOM to collect any matching students.
+    //Iterate thru the DOM to collect any matching students.
     for (var idx=0; idx < $student.length; idx++){
         if (($student[idx].innerText.includes(inputValue))) {
             results.push($student[idx]);
@@ -132,7 +132,7 @@ function appendFirstTenSearchResults() {
 }
 
 function noMatchesMessage() {
-    //If no matching students found, then append a message to the DOM.
+    //If no matching students found, then append a message to the DOM & change input placeholder value.
     studentDisplayNone();
     var $studentList = $('.student-list');
     var message = '<h4>No matches found.</h4>';
@@ -170,9 +170,9 @@ function appendSearchLinksDiv() {
 }
 
 function searchPaginationLinkClicked() {
-    //When search link is clicked, corresponding set of students is displayed.
+    //When search pagination link is clicked, corresponding set of students is displayed.
     $('.search-active').on('click', function() {
-        //Remove any previous displayed message, search links & students.
+        //Remove any previously displayed message & students.
         $('h4').remove();
         studentDisplayNone();
         //Calculate new range of students to display.
