@@ -3,11 +3,11 @@
 
 /* Global Variables ------------------------------------*/
 var $student = $('.student-item');
-var counter;  // To track # of search result pagination links to make.
-var results = [];
 var $input;
 var inputValue;
 var notMatch = true;
+var counter;  // To track # of search result pagination links to make.
+var results = [];
 
 
 /* Main Functions ----------------------------------------*/
