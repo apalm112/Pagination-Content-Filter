@@ -2,15 +2,13 @@
     Script dynamically adds functionality so user can click on links to view student list, ten students or less at a time. */
 
 /* Global Variables ------------------------------------*/
-var $studentList = $('.student-list');  //to hide student ul element
-var $studentDetails = $('.student-details');
 var $student = $('.student-item');
 var counter;  // To track # of search result pagination links to make.
 var results = [];
 var $input;
 var inputValue;
-console.log('INPUT VALUE IS: ' + inputValue);
 var notMatch = true;
+
 
 /* Main Functions ----------------------------------------*/
 
@@ -119,8 +117,6 @@ function getMatches() {
     for (var idx=0; idx < $student.length; idx++){
         if (($student[idx].innerText.includes(inputValue)) && (inputValue !== '')) {
             results.push($student[idx]);
-            //Shows only matching students.
-            // $student.slice(idx, idx+1).css('display', 'list-item');
             counter++;
             //Clears the user input text from the input form.
             $input[0].childNodes[0].value = '';
@@ -140,6 +136,7 @@ function appendFirstTenSearchResults() {
 function noMatchesMessage() {
     //If no matches, then a message in the HTML tells user no matches found.
     studentDisplayNone();
+    var $studentList = $('.student-list');
     var message = '<h4>No matches found.</h4>';
     $studentList.prepend(message);
     //Change input value of placeholder.
@@ -196,7 +193,6 @@ function hideSearchLinks() {
     $searchLink.remove();
 }
 
-/* On page load ---------------------------------*/
 //On initial page load, these functions are executed.
 $(document).ready(function() {
     showFirstTenStudents();
