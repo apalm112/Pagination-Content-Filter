@@ -3,17 +3,16 @@
 
 /* Global Variables ------------------------------------*/
 var $student = $('.student-item');
+var counter;  // To track # of search result pagination links to make.
+var results = [];
 var $input;
 var inputValue;
 var notMatch = true;
-var counter;  // To track # of search result pagination links to make.
-var results = [];
-
 
 /* Main Functions ----------------------------------------*/
 
 function studentDisplayNone() {
-    //Hides students currently being displayed.
+    //Hides all the students currently being displayed.
     $student.slice(0, $student.length).css('display', 'none');
 }
 
@@ -71,11 +70,12 @@ function appendSearchDiv() {
 }
 
 function searchButtonClicked() {
-    //Function returns students that match user input value.
+    //Returns all results that match name or emails which include matching name.
+    //Get user text value from input.
     $('.student-search button').on('click', function() {
-        //Removes the no match found message.
+        //Removes the no match found message if it has been appended.
         $('h4').remove();
-        //Empty the results array to hold new search results.
+        //Prep the results array for new search results by emptying it out.
         results = [];
         //Function call to search for a match.
         searchNames();
@@ -85,39 +85,38 @@ function searchButtonClicked() {
 
 function searchNames(){
     //Function searches for matching name or email, displays results to the DOM.
-    //Set values for variables that are passed to other functions.
     $input = $('.student-search');
     inputValue = $input[0].firstChild.value.toLowerCase();
     notMatch = true;
     counter = 0;
     studentDisplayNone();
-    removeSearchLinks();
+    hideSearchLinks();
     getMatches();
     if (inputValue === '') {
-        //Conditional resets DOM to inital page load state.
+        //If input is empty, reload to initial page.
         showFirstTenStudents();
         appendPaginationLinks();
         paginationClicked();
-    //Conditional displays no matches found message to the DOM.
     } else if (notMatch) {
+        //Display no matches found message to the DOM.
         noMatchesMessage();
-        removeSearchLinks();
+        hideSearchLinks();
     } else {
-        // This conditional runs when matches are found.
+        // This conditional runs when matches are found. It will call a  function to create search pagination links & append them.
         appendSearchLinksDiv();
         appendFirstTenSearchResults();
     }
 }
 
 function getMatches() {
-    //Iterate thru the DOM to collect any matching students.
+    //Iterate thru DOM to collect any matching students.
     for (var idx=0; idx < $student.length; idx++){
-        if (($student[idx].innerText.includes(inputValue))) {
+        if (($student[idx].innerText.includes(inputValue)) && (inputValue !== '')) {
             results.push($student[idx]);
             counter++;
             //Clears the user input text from the input form.
             $input[0].childNodes[0].value = '';
-            //Changed to false so no matches message function triggered.
+            //Changed to false so no matches message function is not triggered.
             notMatch = false;
         }
     }
@@ -126,15 +125,15 @@ function getMatches() {
 function appendFirstTenSearchResults() {
     //Display the first ten search results.
     var firstTen = results.slice(0, 10);
-    for (var idx=0; idx < firstTen.length; idx++){
-        firstTen[idx].style.display = ('list-item');
+    for (var sdx=0; sdx < firstTen.length; sdx++){
+        firstTen[sdx].style.display = ('list-item');
     }
 }
 
 function noMatchesMessage() {
-    //If no matching students found, then append a message to the DOM & change input placeholder value.
-    studentDisplayNone();
+    //If no matches, then a message in the HTML tells user no matches found.
     var $studentList = $('.student-list');
+    studentDisplayNone();
     var message = '<h4>No matches found.</h4>';
     $studentList.prepend(message);
     //Change input value of placeholder.
@@ -144,9 +143,8 @@ function noMatchesMessage() {
 }
 
 function calculateSearchPagesNeeded() {
-    //Calculate the # of pagination links needed, based on 10 students/link.
+    //Calculate the # of pages & links needed, based on 10 students/page.
     var numberOfSearchLinks = Math.ceil(counter / 10);
-    //If less than 10 students, then don't display pagination links.
     if (numberOfSearchLinks === 1) {
         numberOfSearchLinks = 0;
     }
@@ -154,7 +152,7 @@ function calculateSearchPagesNeeded() {
 }
 
 function createSearchLinksDiv() {
-    //Creates the pagination links w/ corresponding number values displayed.
+    //Dynamically creates the pagination links w/ corresponding number values displayed.
     var searchLink = '<div class="search-pagination"><ul>';
     for (var idx=0; idx < calculateSearchPagesNeeded(); idx++) {
         searchLink += '<li><a class="search-active" href="#' + (idx+1) + '">';
@@ -170,14 +168,14 @@ function appendSearchLinksDiv() {
 }
 
 function searchPaginationLinkClicked() {
-    //When search pagination link is clicked, corresponding set of students is displayed.
+    //When search link is clicked, corresponding set of students is displayed.
     $('.search-active').on('click', function() {
-        //Remove any previously displayed message & students.
+        //Remove any previous displayed message or search links.
         $('h4').remove();
-        studentDisplayNone();
         //Calculate new range of students to display.
         var highNumber = this.innerHTML * 10;
         var lowNumber = highNumber - 10;
+        studentDisplayNone();
         //Show new set of students.
         var firstTen = results.slice(lowNumber, highNumber);
         for (var idx=0; idx < firstTen.length; idx++){
@@ -186,8 +184,8 @@ function searchPaginationLinkClicked() {
     });
 }
 
-function removeSearchLinks() {
-    //When no matching students found, remove the pagination links.
+function hideSearchLinks() {
+    //When no matching students found, hide the pagination links.
     $searchLink = $('.search-pagination');
     $searchLink.remove();
 }
