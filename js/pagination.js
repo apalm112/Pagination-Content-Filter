@@ -13,7 +13,7 @@ var results = [];
 /* Main Functions ----------------------------------------*/
 
 function studentDisplayNone() {
-    //Hides students currently being displayed.
+    //Hides students being displayed.
     $student.slice(0, $student.length).css('display', 'none');
 }
 
