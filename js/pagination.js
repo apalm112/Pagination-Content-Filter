@@ -61,7 +61,7 @@ function paginationClicked() {
 /* Content Filter Functions -----------------------------------------*/
 
 function appendSearchDiv() {
-    //Dynamically create & append content filter input & button, using the format:
+    //Dynamically create & append content filter input & button.
     var search =  '<div class="student-search">';
     search += '<input placeholder="search for students...">';
     search += '<button>Search</button>';
