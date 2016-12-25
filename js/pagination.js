@@ -117,7 +117,7 @@ function getMatches() {
             counter++;
             //Clears the user input text from the input form.
             $input[0].childNodes[0].value = '';
-            //Changed to false so no matches message function triggered.
+            //Changed to false so no matches message function is not triggered.
             notMatch = false;
         }
     }
