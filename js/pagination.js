@@ -75,7 +75,7 @@ function searchButtonClicked() {
     $('.student-search button').on('click', function() {
         //Removes the no match found message if it has been appended.
         $('h4').remove();
-        //Prep the results array for new search results by emptying in out.
+        //Prep the results array for new search results by emptying it out.
         results = [];
         //Function call to search for a match.
         searchNames();
@@ -87,23 +87,20 @@ function searchNames(){
     //Function searches for matching name or email, displays results to the DOM.
     $input = $('.student-search');
     inputValue = $input[0].firstChild.value.toLowerCase();
-    console.log('INPUT VALUE IS: ' + inputValue);
     notMatch = true;
     counter = 0;
-    //Hides any students currently displayed.
     studentDisplayNone();
-    hideSearchLinks(); // THIS ONE WORKS!
+    hideSearchLinks();
     getMatches();
     if (inputValue === '') {
-        console.log('RETURN TO FIRST PAGE');
+        //If input is empty, reload to initial page.
         showFirstTenStudents();
-        //Function call to display default pagination links!
         appendPaginationLinks();
         paginationClicked();
-    //Display no matches found message to the DOM.
     } else if (notMatch) {
+        //Display no matches found message to the DOM.
         noMatchesMessage();
-        hideSearchLinks(); // THIS ONE WORKS!
+        hideSearchLinks();
     } else {
         // This conditional runs when matches are found. It will call a  function to create search pagination links & append them.
         appendSearchLinksDiv();
