@@ -113,8 +113,6 @@ function getMatches() {
     for (var idx=0; idx < $student.length; idx++){
         if (($student[idx].innerText.includes(inputValue)) && (inputValue !== '')) {
             results.push($student[idx]);
-            //Shows only matching students.
-            // $student.slice(idx, idx+1).css('display', 'list-item');
             counter++;
             //Clears the user input text from the input form.
             $input[0].childNodes[0].value = '';
@@ -192,7 +190,6 @@ function hideSearchLinks() {
     $searchLink.remove();
 }
 
-/* On page load ---------------------------------*/
 //On initial page load, these functions are executed.
 $(document).ready(function() {
     showFirstTenStudents();
